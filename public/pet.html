@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/public/styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <title>Pet Adoption System</title>
+</head>
+<body>
+    <h1>Pet Adoption System</h1>
+
+    <section id="pet-list">
+        <h2>Available Pets for Adoption</h2>
+        <ul id="pets"></ul>
+        <button onclick="fetchAllPets()">Refresh List</button>
+    </section>
+
+    <section id="pet-details">
+        <h2>Pet Details</h2>
+        <input type="text" id="petName" placeholder="Enter Pet Name">
+        <button onclick="fetchPetDetails()">Get Details</button>
+        <div id="pet-info"></div>
+    </section>
+
+    <section id="add-pet">
+        <h2>Add New Pet</h2>
+        <input type="text" id="newPetName" placeholder="Pet Name">
+        <input type="text" id="newPetSpecies" placeholder="Species">
+        <input type="text" id="newPetBreed" placeholder="Breed">
+        <input type="number" id="newPetAge" placeholder="Age">
+        <button onclick="addPet()">Add Pet</button>
+    </section>
+
+    <section id="update-pet">
+        <h2>Update Pet Details</h2>
+        <input type="text" id="updatePetName" placeholder="Pet Name">
+        <input type="text" id="updatePetSpecies" placeholder="New Species">
+        <input type="text" id="updatePetBreed" placeholder="New Breed">
+        <input type="number" id="updatePetAge" placeholder="New Age">
+        <button onclick="updatePet()">Update Pet</button>
+    </section>
+
+    <section id="delete-pet">
+        <h2>Delete Pet</h2>
+        <input type="text" id="deletePetName" placeholder="Enter Pet Name">
+        <button onclick="deletePet()">Delete Pet</button>
+    </section>
+
+    <script src="/public/script.js"></script>
+</body>
+</html>
