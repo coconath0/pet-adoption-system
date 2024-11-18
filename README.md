@@ -2,8 +2,6 @@
 
 This Pet Adoption System is a simple REST API built with pure JavaScript (Node.js) that serves as a foundational learning project prior to using Express and MongoDB. The application allows users to perform CRUD operations on pet data, making it a great starting point for understanding RESTful services.
 
-**NOTE:** Pet REST server not uploaded because of Professor's ownership.
-
 ## Features
 
 - **RESTful API**: Provides endpoints for creating, reading, updating, and deleting pet information.
