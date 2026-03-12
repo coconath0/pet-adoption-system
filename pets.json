@@ -1,0 +1,52 @@
+{
+  "Max": {
+    "name": "Max",
+    "species": "Dog",
+    "breed": "Golden Retriever",
+    "age": 3,
+    "imageUrl": "https://www.vidavetcare.com/wp-content/uploads/sites/234/2022/04/golden-retriever-dog-breed-info.jpeg?w=300&h=300&fit=crop"
+  },
+  "Bella": {
+    "name": "Bella",
+    "species": "Dog",
+    "breed": "Labrador",
+    "age": 2,
+    "imageUrl": "https://www.vidavetcare.com/wp-content/uploads/sites/234/2022/04/labrador-retriever-dog-breed-info.jpeg?w=300&h=300&fit=crop"
+  },
+  "Charlie": {
+    "name": "Charlie",
+    "species": "Dog",
+    "breed": "German Shepherd",
+    "age": 4,
+    "imageUrl": "https://www.carecredit.com/sites/cc/image/german_shepherd_dog_guide.jpg?w=300&h=300&fit=crop"
+  },
+  "Daisy": {
+    "name": "Daisy",
+    "species": "Dog",
+    "breed": "Beagle",
+    "age": 1,
+    "imageUrl": "https://www.zooplus.ie/magazine/wp-content/uploads/2018/05/2-Jahre-Beagle-768x512.webp?w=300&h=300&fit=crop"
+  },
+  "Rocky": {
+    "name": "Rocky",
+    "species": "Dog",
+    "breed": "Bulldog",
+    "age": 5,
+    "imageUrl": "https://cdn.britannica.com/07/234207-050-0037B589/English-bulldog-dog.jpg?w=300&h=300&fit=crop"
+  },
+  "Belle": {
+    "name": "Belle",
+    "species": "Cat",
+    "breed": "Orange Cat",
+    "age": 1,
+    "imageUrl": "http://127.0.0.1:8000/uploads/orange-cat.png"
+  },
+  "Tequila": {
+    "name": "Tequila",
+    "species": "Cat",
+    "breed": "Black Cat",
+    "age": 1,
+    "imageUrl": "http://127.0.0.1:8000/uploads/black-kitten.webp"
+  }
+
+}
