@@ -22,20 +22,30 @@ async function fetchAllPets() {
         result.data.forEach(pet => {
             const card = document.createElement("div");
             card.className = "pet-card";
+            card.dataset.species = (pet.species || '').toLowerCase();
+            card.dataset.breed = (pet.breed || '').toLowerCase();
             const imageUrl = pet.imageUrl || 'https://via.placeholder.com/300?text=No+Image';
             card.innerHTML = `
-                <img src="${imageUrl}" alt="${pet.name}" class="pet-card-image" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
+                <div class="pet-card-image-wrap">
+                    <img src="${imageUrl}" alt="${pet.name}" class="pet-card-image" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
+                </div>
                 <div class="pet-card-info">
                     <div class="pet-card-name">${pet.name}</div>
                     <div class="pet-card-details">
-                        <div class="pet-card-detail-line"><strong>Species:</strong> ${pet.species}</div>
-                        <div class="pet-card-detail-line"><strong>Breed:</strong> ${pet.breed}</div>
-                        <div class="pet-card-detail-line"><strong>Age:</strong> ${pet.age} years old</div>
+                        <div class="pet-card-detail-line">${pet.species} • ${pet.breed}</div>
+                        <div class="pet-card-detail-line">${pet.age} years old</div>
                     </div>
                 </div>
             `;
             petList.appendChild(card);
         });
+
+        // Reset and animate carousel after cards are in the DOM
+        if (typeof carouselIndex !== 'undefined') {
+            carouselIndex = 0;
+            requestAnimationFrame(() => updateCarousel());
+        }
+
     } catch (error) {
         alert('Failed to connect to server: ' + error.message);
     }
@@ -74,47 +84,78 @@ async function fetchPetDetails() {
     }
 }
 
-// Add new pet
-async function addPet() {
-    const name = document.getElementById("newPetName").value.trim();
-    const species = document.getElementById("newPetSpecies").value.trim();
-    const breed = document.getElementById("newPetBreed").value.trim();
-    const age = parseInt(document.getElementById("newPetAge").value);
-    const imageUrl = document.getElementById("newPetImage").value.trim();
+// Add new pet (updated to handle file uploads)
+document.getElementById('addPetForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
 
-    if (!name || !species || !breed || isNaN(age)) {
-        alert('Please fill in all required fields with valid values');
-        return;
-    }
+    const formData = new FormData(this);
+    const fileInput = document.getElementById('newPetImage');
+    const urlInput = document.getElementById('newPetImageUrl');
 
-    const newPet = { name, species, breed, age };
-    if (imageUrl) {
-        newPet.imageUrl = imageUrl;
-    }
+    // If no file is selected but URL is provided, use the old JSON method
+    if (!fileInput.files[0] && urlInput.value.trim()) {
+        // Use JSON method for URL
+        const newPet = {
+            name: formData.get('name').trim(),
+            species: formData.get('species').trim(),
+            breed: formData.get('breed').trim(),
+            age: parseInt(formData.get('age')),
+            imageUrl: urlInput.value.trim()
+        };
 
-    try {
-        const response = await fetch(`${API_URL}/pets`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newPet)
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-            alert(result.message);
-            document.getElementById("newPetName").value = '';
-            document.getElementById("newPetSpecies").value = '';
-            document.getElementById("newPetBreed").value = '';
-            document.getElementById("newPetAge").value = '';
-            document.getElementById("newPetImage").value = '';
-        } else {
-            alert('Error: ' + result.message);
+        if (!newPet.name || !newPet.species || !newPet.breed || isNaN(newPet.age)) {
+            alert('Please fill in all required fields with valid values');
+            return;
         }
-    } catch (error) {
-        alert('Failed to add pet: ' + error.message);
+
+        try {
+            const response = await fetch(`${API_URL}/pets`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newPet)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.message);
+                this.reset();
+                fetchAllPets();
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (error) {
+            alert('Failed to add pet: ' + error.message);
+        }
+    } else if (fileInput.files[0]) {
+        // Use FormData for file upload
+        if (!formData.get('name').trim() || !formData.get('species').trim() || !formData.get('breed').trim() || !formData.get('age')) {
+            alert('Please fill in all required fields with valid values');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/pets`, {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(result.message);
+                this.reset();
+                fetchAllPets();
+            } else {
+                alert('Error: ' + result.message);
+            }
+        } catch (error) {
+            alert('Failed to add pet: ' + error.message);
+        }
+    } else {
+        alert('Please either select an image file or provide an image URL');
     }
-}
+});
 
 // Update pet details
 async function updatePet() {
